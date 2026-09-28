@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+demo_data/
+demo_cache/
+demo_model/
+demo_output/
+dataset/
+cache/
+model/
+output/
+*.npz
+*.parquet

@@ -1,0 +1,329 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>img{max-width:100%}[hidden]{display:none!important}body{margin:0}</style></head><body>
+<title>Same Business?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112..125,500..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --paper:#F3F4F1;--panel:#FFFFFF;--ink:#161C2A;--muted:#5A6272;--rule:#D9DDE3;--soft:#E9ECEF;
+  --stamp:#2F55D4;--hl:#FFE27A;--hl-ink:#3A2F00;--yes:#1F7A4D;--maybe:#A96B12;--no:#C23F26;
+  --display:"Archivo","Arial Narrow",system-ui,sans-serif;--body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;--mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;
+  --paper:#0F131B;--panel:#171C27;--ink:#E7EAF0;--muted:#9AA3B2;--rule:#2A3140;--soft:#1F2533;
+  --stamp:#86A2FF;--hl:rgba(255,214,90,.26);--hl-ink:#FFE7A0;--yes:#4CC38A;--maybe:#E3B04B;--no:#F07A5E;}}
+:root[data-theme="dark"]{color-scheme:dark;
+  --paper:#0F131B;--panel:#171C27;--ink:#E7EAF0;--muted:#9AA3B2;--rule:#2A3140;--soft:#1F2533;
+  --stamp:#86A2FF;--hl:rgba(255,214,90,.26);--hl-ink:#FFE7A0;--yes:#4CC38A;--maybe:#E3B04B;--no:#F07A5E;}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font:16px/1.6 var(--body);padding-inline:20px;padding-block:28px 56px}
+.wrap{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:64px}
+h1,h2,h3{font-family:var(--display);font-stretch:118%;line-height:1.05;margin:0;text-wrap:balance}
+h1{font-size:clamp(44px,8vw,88px);font-weight:800;letter-spacing:-.01em}
+h2{font-size:clamp(26px,3.6vw,38px);font-weight:700}
+h3{font-size:15px;font-weight:700;font-stretch:112%;text-transform:uppercase;letter-spacing:.06em}
+p{margin:0;max-width:65ch}
+.eyebrow{font:500 12px/1 var(--mono);text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}
+.muted{color:var(--muted)}
+a{color:var(--stamp)}
+header{display:flex;flex-direction:column;gap:16px}
+.lede{font-size:18px;color:var(--muted)}
+.facts{display:flex;flex-wrap:wrap;gap:8px 28px;font:500 14px/1.4 var(--mono);color:var(--muted)}
+.facts b{color:var(--ink);font-weight:500}
+section{display:flex;flex-direction:column;gap:20px}
+.presets{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:500 13px/1 var(--body);border:1px solid var(--rule);background:var(--panel);color:var(--ink);padding:9px 12px;border-radius:999px;cursor:pointer}
+.chip:hover{border-color:var(--stamp)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.chip:focus-visible,input:focus-visible{outline:2px solid var(--stamp);outline-offset:2px}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.card{background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:10px;
+  background-image:repeating-linear-gradient(to bottom,transparent 0 31px,var(--soft) 31px 32px);background-position:0 44px}
+.card .src{font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between}
+label{font:500 12px/1 var(--body);color:var(--muted)}
+input{width:100%;font:15px/1.4 var(--mono);color:var(--ink);background:transparent;border:0;border-bottom:1px solid var(--rule);padding:6px 0 7px}
+.verdict{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center;background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:22px}
+.stamp{font:800 26px/1 var(--display);font-stretch:125%;letter-spacing:.04em;text-transform:uppercase;border:3px solid currentColor;border-radius:6px;padding:12px 16px;transform:rotate(-4deg);white-space:nowrap}
+.stamp.yes{color:var(--yes)}.stamp.maybe{color:var(--maybe)}.stamp.no{color:var(--no)}
+.meter{display:flex;flex-direction:column;gap:8px}
+.meter .row{display:flex;justify-content:space-between;font:500 14px/1 var(--mono)}
+.track{position:relative;height:10px;background:var(--soft);border-radius:5px}
+.fill{position:absolute;inset:0 auto 0 0;background:var(--ink);border-radius:5px;transition:width .25s}
+.tick{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--muted)}
+.why{display:grid;grid-template-columns:1.1fr 1fr 1.1fr;gap:16px}
+.step{background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.step .n{font:500 12px/1 var(--mono);color:var(--stamp)}
+.tokens{font:14px/1.9 var(--mono);word-break:break-word}
+.tokens .lab{display:block;font:500 11px/1.6 var(--body);color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+mark{background:var(--hl);color:var(--hl-ink);padding:1px 3px;border-radius:2px}
+.keys{display:flex;flex-direction:column;gap:6px;font:13px/1.35 var(--mono);max-height:260px;overflow:auto}
+.key{display:flex;gap:8px;align-items:baseline}
+.key .t{font:500 11px/1.4 var(--body);color:var(--muted);min-width:9.5em;flex-shrink:0}
+.ev{display:flex;flex-direction:column;gap:9px}
+.evrow{display:grid;grid-template-columns:9.5em 1fr 3.3em;gap:10px;align-items:center;font-size:13px}
+.evrow .val{font:500 12px/1 var(--mono);text-align:right;font-variant-numeric:tabular-nums}
+.bar{height:8px;background:var(--soft);border-radius:4px;position:relative}
+.bar i{position:absolute;inset:0 auto 0 0;border-radius:4px;background:var(--stamp)}
+.bar i.neg{background:var(--no)}
+.note{font-size:13px;color:var(--muted)}
+.funnel{display:flex;flex-direction:column;gap:14px}
+.frow{display:grid;grid-template-columns:minmax(0,13em) 1fr;gap:16px;align-items:center}
+.frow .lab{font-size:14px}
+.frow .lab b{display:block;font:600 18px/1.2 var(--mono);font-variant-numeric:tabular-nums}
+.fbar{height:26px;background:var(--ink);border-radius:3px}
+.fbar.acc{background:var(--stamp)}
+.axis{display:flex;justify-content:space-between;font:12px/1 var(--mono);color:var(--muted);border-top:1px solid var(--rule);padding-top:6px}
+.dots{overflow-x:auto}
+.dots svg{display:block;min-width:560px;width:100%;height:auto}
+.dots text{font-family:var(--mono);font-size:12px;fill:var(--muted)}
+.dots .lbl{fill:var(--ink);font-family:var(--body);font-size:13px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+ol.pipe{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:14px;counter-reset:s}
+ol.pipe li{display:grid;grid-template-columns:2.2em 1fr;gap:10px;counter-increment:s}
+ol.pipe li::before{content:counter(s);font:700 20px/1.2 var(--display);color:var(--stamp)}
+.callout{border-left:3px solid var(--stamp);padding-left:16px;display:flex;flex-direction:column;gap:8px}
+footer{border-top:1px solid var(--rule);padding-top:20px;display:flex;flex-direction:column;gap:8px;font-size:14px;color:var(--muted)}
+code{font-family:var(--mono);font-size:.92em}
+@media (max-width:820px){.cards,.why,.two{grid-template-columns:1fr}.verdict{grid-template-columns:1fr;gap:18px}.stamp{justify-self:start}}
+@media (prefers-reduced-motion:reduce){.fill{transition:none}}
+</style>
+
+<div class="wrap">
+<header>
+  <span class="eyebrow">Amazon ML Challenge 2026 · Business entity resolution · solo build by Sashank S A</span>
+  <h1>Same business?</h1>
+  <p class="lede">Ten million business records from three sources, written three different ways. For each pair, the question is whether they describe the same company. Try the matcher on two records, or read how the full pipeline got from 17 trillion possible pairs to 5.4 million matches.</p>
+  <div class="facts"><span><b>1.73M</b> businesses to resolve</span><span><b>9.97M</b> candidate records</span><span><b>4.46</b> candidates kept per business</span><span><b>0.935</b> leaderboard F0.5</span></div>
+</header>
+
+<section id="matcher" aria-labelledby="mh">
+  <h2 id="mh">Try the matcher</h2>
+  <div class="presets" role="group" aria-label="Example pairs" id="presets"></div>
+  <div class="cards">
+    <div class="card">
+      <div class="src"><span>Source 1 · reference</span><span>S1</span></div>
+      <label for="n1">Business name</label><input id="n1" autocomplete="off" spellcheck="false">
+      <label for="a1">Address</label><input id="a1" autocomplete="off" spellcheck="false">
+    </div>
+    <div class="card">
+      <div class="src"><span>Source 2 / 3 · noisy</span><span>S2</span></div>
+      <label for="n2">Business name</label><input id="n2" autocomplete="off" spellcheck="false">
+      <label for="a2">Address</label><input id="a2" autocomplete="off" spellcheck="false">
+    </div>
+  </div>
+  <div class="verdict" aria-live="polite">
+    <div class="stamp yes" id="stamp">Match</div>
+    <div class="meter">
+      <div class="row"><span>Match probability</span><span id="prob">0%</span></div>
+      <div class="track"><div class="fill" id="fill"></div><div class="tick" style="left:40%"></div><div class="tick" style="left:80%"></div></div>
+      <div class="row muted" style="font-size:12px"><span>no match</span><span>possible · 40%</span><span>match · 80%</span></div>
+      <p class="note" id="summary"></p>
+    </div>
+  </div>
+  <div class="why">
+    <div class="step"><span class="n">Step 1</span><h3>Clean the text</h3>
+      <div class="tokens" id="clean"></div>
+      <p class="note">Lower-case, strip accents, transliterate Hindi script, drop legal words (Pvt, Ltd, LLC, SARL…), unify Road/Rd, remove state names. Shared words are highlighted.</p></div>
+    <div class="step"><span class="n">Step 2</span><h3>Shared blocking keys</h3>
+      <div class="keys" id="keys"></div>
+      <p class="note">Two records are only compared if they share at least one rare key. This is how 17 trillion pairs shrink to 50 million.</p></div>
+    <div class="step"><span class="n">Step 3</span><h3>Weigh the evidence</h3>
+      <div class="ev" id="ev"></div>
+      <p class="note">Each bar is one similarity score times its learned weight. The total becomes the probability above.</p></div>
+  </div>
+  <p class="note">This in-browser version uses 8 features and a logistic model trained on generated look-alike data, so every step is visible. The competition pipeline used about 50 features and two LightGBM models.</p>
+</section>
+
+<section aria-labelledby="fh">
+  <h2 id="fh">From 17 trillion pairs to 5.4 million matches</h2>
+  <p class="muted">Test set, real numbers. The bars use a log scale: each grid step is 10× fewer pairs.</p>
+  <div class="funnel" id="funnel"></div>
+</section>
+
+<section aria-labelledby="lh">
+  <h2 id="lh">What the leaderboard taught me</h2>
+  <div class="dots"><svg id="dots" viewBox="0 0 760 250" role="img" aria-label="Public leaderboard scores of each submission on a 0.90 to 1.00 scale"></svg></div>
+  <div class="two">
+    <div class="callout"><h3>Validation said 0.950. The leaderboard said 0.903.</h3>
+      <p>The two-stage model looked best on held-out training data, then dropped on the real test set. The test set had more look-alike decoys per business (5.8 records vs 4.7), so its extra matches were mostly wrong. Keeping only the pairs that two differently built models agreed on brought precision back: 0.935.</p></div>
+    <div class="callout"><h3>What I would do next</h3>
+      <p>Close the recall gap for Indian records with short addresses and non-Latin names (India's recall ceiling was 0.895, vs 0.956 for the US), and try graph clustering over all records of one business. The top team reached 0.991, so a large idea is still missing.</p></div>
+  </div>
+</section>
+
+<section aria-labelledby="ph">
+  <h2 id="ph">The full pipeline</h2>
+  <div class="two">
+    <ol class="pipe">
+      <li><div><b>Normalise.</b> <span class="muted">Apache Arrow string kernels clean 12 million rows in about 10 minutes, including transliteration of Hindi, Telugu and Tamil names.</span></div></li>
+      <li><div><b>Block.</b> <span class="muted">11 kinds of rare keys (house number + street word, name prefixes, sound codes). Keys shared by too many records are dropped; each business keeps its top 30 by weighted overlap.</span></div></li>
+      <li><div><b>Prune.</b> <span class="muted">A small LightGBM model cuts 29 candidates to 4.5 per business while keeping 99.5% of the true matches it can still reach.</span></div></li>
+      <li><div><b>Match.</b> <span class="muted">A second LightGBM model with about 50 features, including "does another business explain this record better?", then each record goes to at most one business.</span></div></li>
+    </ol>
+    <div class="callout"><h3>Constraints</h3>
+      <p>Free Google Colab: 2 CPU cores, 12.7 GB RAM, no GPU. About 1.5 hours per full run. Only permissively licensed libraries: PyArrow, RapidFuzz, LightGBM, indic-transliteration. No external lookups.</p>
+      <p>France appeared only in the test set, so the model never uses country as a feature.</p></div>
+  </div>
+</section>
+
+<footer>
+  <span>Built solo by Sashank S A for the Amazon ML Challenge 2026 (25–27 Sep). The competition data is not public; examples on this page are made up.</span>
+  <span id="links">Code, docs and a 2-minute Colab demo: <a href="https://github.com/Sashank2006/Amazon-ML-Entity-Resolution">github.com/Sashank2006/Amazon-ML-Entity-Resolution</a></span>
+</footer>
+</div>
+
+<script>
+// ---- Matcher core: exact port of web/build/demo_model.py ----
+const ER = (function () {
+  const CONS = {"क":"k","ख":"kh","ग":"g","घ":"gh","ङ":"n","च":"ch","छ":"chh","ज":"j","झ":"jh","ञ":"n","ट":"t","ठ":"th","ड":"d","ढ":"dh","ण":"n","त":"t","थ":"th","द":"d","ध":"dh","न":"n","प":"p","फ":"ph","ब":"b","भ":"bh","म":"m","य":"y","र":"r","ल":"l","व":"v","श":"sh","ष":"sh","स":"s","ह":"h","ळ":"l","क़":"k","ख़":"kh","ग़":"g","ज़":"z","ड़":"r","ढ़":"rh","फ़":"f"};
+  const VOW = {"अ":"a","आ":"aa","इ":"i","ई":"ee","उ":"u","ऊ":"oo","ऋ":"ri","ए":"e","ऐ":"ai","ओ":"o","औ":"au","ऑ":"o"};
+  const MATRA = {"ा":"aa","ि":"i","ी":"ee","ु":"u","ू":"oo","ृ":"ri","े":"e","ै":"ai","ो":"o","ौ":"au","ॉ":"o"};
+  const VIRAMA = "्", NUKTA = "़", NASAL = {"ं":"n","ँ":"n","ः":"h"};
+  function deva(s) {
+    const c = Array.from(s), out = [];
+    for (let i = 0; i < c.length; i++) {
+      let ch = c[i];
+      if (i + 1 < c.length && c[i + 1] === NUKTA && CONS[ch + NUKTA] !== undefined) { ch = ch + NUKTA; i++; }
+      if (CONS[ch] !== undefined) {
+        out.push(CONS[ch]);
+        const nx = i + 1 < c.length ? c[i + 1] : "";
+        if (MATRA[nx] !== undefined) { out.push(MATRA[nx]); i++; }
+        else if (nx === VIRAMA) { i++; }
+        else out.push("a");
+      } else if (VOW[ch] !== undefined) out.push(VOW[ch]);
+      else if (NASAL[ch] !== undefined) out.push(NASAL[ch]);
+      else if (MATRA[ch] !== undefined || ch === VIRAMA || ch === NUKTA) {}
+      else out.push(ch);
+    }
+    return out.join("").split(" ").map(w => (w.length > 3 && w.endsWith("a") && !w.endsWith("aa")) ? w.slice(0, -1) : w).join(" ");
+  }
+  let M = null, NAME_STOP, ADDR_STOP, STATES, CANON;
+  function init(model) { M = model; NAME_STOP = new Set(model.name_stop); ADDR_STOP = new Set(model.addr_stop); STATES = new Set(model.states); CANON = model.canon; }
+  function fold(s) {
+    if (/[ऀ-ॿ]/.test(s)) s = deva(s);
+    return s.toLowerCase().normalize("NFKD").replace(/\p{M}/gu, "");
+  }
+  const squash = s => s.split(/\s+/).filter(Boolean).join(" ");
+  function normName(raw) {
+    let s = fold(raw);
+    s = s.replace(/\bdba\b\s*:?/g, " ").replace(/\.(com|net|org|in|co|fr|us)\b/g, " ").replace(/&/g, " and ");
+    s = s.replace(/(\w)'s\b/g, "$1s").replace(/\b([a-z])\.(?:[a-z]\.)+/g, "").replace(/[^a-z0-9 ]/g, " ");
+    return s.split(/\s+/).filter(w => w && !NAME_STOP.has(w)).join(" ");
+  }
+  function normAddr(raw) {
+    let s = fold(raw).replace(/<null>|\bn\/a\b/g, " ");
+    const segs = s.split(",").filter(seg => { const c = squash(seg.replace(/[^a-z0-9]/g, " ")); return c && !STATES.has(c); });
+    s = segs.join(" , ").replace(/(\d)(st|nd|rd|th)\b/g, "$1").replace(/[^a-z0-9 ]/g, " ");
+    s = s.replace(/(\d)([a-z]{3,})/g, "$1 $2").replace(/([a-z]{3,})(\d)/g, "$1 $2");
+    return s.split(/\s+/).filter(Boolean).map(w => CANON[w] !== undefined ? CANON[w] : w)
+      .map(w => w.replace(/^0+(\d)/, "$1")).filter(w => !ADDR_STOP.has(w)).join(" ");
+  }
+  const PHON = [[/igh/g,"i"],[/ph/g,"f"],[/ck/g,"k"],[/x/g,"ks"],[/q/g,"k"],[/tion/g,"shon"],[/c([eiy])/g,"s$1"],[/g([ei])/g,"j$1"],[/c/g,"k"],[/([sdtbkgj])h/g,"$1"],[/w/g,"v"],[/z/g,"j"],[/j\b/g,"s"],[/\B[aeiouy]/g,""],[/\Bh/g,""]];
+  function phonetic(s) { for (const [p, r] of PHON) s = s.replace(p, r); return s.replace(/([bdfgjklmnprstv])\1+/g, "$1"); }
+  function lcs(a, b) {
+    if (!a || !b) return 0;
+    let prev = new Array(b.length + 1).fill(0);
+    for (const ca of a) { const cur = [0]; for (let j = 0; j < b.length; j++) cur.push(ca === b[j] ? prev[j] + 1 : Math.max(prev[j + 1], cur[j])); prev = cur; }
+    return prev[b.length];
+  }
+  const ratio = (a, b) => (!a && !b) ? 0 : 2 * lcs(a, b) / (a.length + b.length);
+  const sortedJoin = set => [...set].sort().join(" ");
+  function tokenSet(a, b) {
+    const A = new Set(a.split(" ").filter(Boolean)), B = new Set(b.split(" ").filter(Boolean));
+    if (!A.size || !B.size) return 0;
+    const inter = sortedJoin([...A].filter(x => B.has(x)));
+    const da = sortedJoin([...A].filter(x => !B.has(x))), db = sortedJoin([...B].filter(x => !A.has(x)));
+    if (inter && (!da || !db)) return 1;
+    const s1 = (inter + " " + da).trim(), s2 = (inter + " " + db).trim();
+    let best = ratio(s1, s2);
+    if (inter) best = Math.max(best, ratio(inter, s1), ratio(inter, s2));
+    return best;
+  }
+  function splitAddr(ad) { const t = ad.split(" ").filter(Boolean); return [t.filter(x => /^[0-9]/.test(x)), t.filter(x => !/^[0-9]/.test(x))]; }
+  const longest = arr => arr.reduce((a, b) => b.length > a.length ? b : a, "");
+  function features(n1r, a1r, n2r, a2r) {
+    const n1 = normName(n1r), n2 = normName(n2r), a1 = normAddr(a1r), a2 = normAddr(a2r);
+    const [num1, al1] = splitAddr(a1), [num2, al2] = splitAddr(a2);
+    const hn1 = longest(num1), hn2 = longest(num2);
+    const f = [ratio(n1, n2), tokenSet(n1, n2), ratio(n1.replace(/ /g, ""), n2.replace(/ /g, "")), ratio(phonetic(n1), phonetic(n2))];
+    if (!a1 || !a2) f.push(0.5, 0.5, 0.5, 0);
+    else f.push(tokenSet(a1, a2), tokenSet(al1.join(" "), al2.join(" ")),
+      (num1.length && num2.length) ? tokenSet(num1.join(" "), num2.join(" ")) : 0.5, (hn1 && hn2 && hn1 !== hn2) ? 1 : 0);
+    return { f, n1, n2, a1, a2, p1: phonetic(n1), p2: phonetic(n2) };
+  }
+  function score(f) { let z = M.bias; f.forEach((v, i) => z += M.weights[i] * v); return 1 / (1 + Math.exp(-z)); }
+  // blocking keys (display): same key types and caps as src/blocking.py
+  function keys(name, addr) {
+    const nt = name.split(" ").filter(t => /^[a-z0-9]{2,}$/.test(t)).slice(0, 6);
+    const at = addr.split(" ").filter(t => /^[a-z][a-z0-9]{2,}$/.test(t)).slice(0, 8);
+    const num = addr.split(" ").filter(t => /^[0-9][0-9a-z]*$/.test(t)).slice(0, 3);
+    const pn = name.split(" ").filter(t => /^[a-z][a-z0-9]{2,}$/.test(t)).slice(0, 3).map(t => t.slice(0, 4));
+    const pa = addr.split(" ").filter(t => /^[a-z][a-z0-9]{3,}$/.test(t)).slice(0, 6).map(t => t.slice(0, 4));
+    const ph = phonetic(name).split(" ").filter(t => /^[a-z]{3,}$/.test(t)).slice(0, 6);
+    const K = new Map(), add = (type, v) => K.set(type + ":" + v, { type, v });
+    const pairs = (arr, f) => { for (let i = 0; i < arr.length; i++) for (let j = i + 1; j < arr.length; j++) f(arr[i], arr[j]); };
+    const pk = (a, b) => a < b ? a + " + " + b : b + " + " + a;
+    nt.forEach(t => add("name word", t));
+    pairs(nt, (a, b) => add("name pair", pk(a, b)));
+    const ns = name.replace(/ /g, ""); if (ns.length >= 4) add("name, no spaces", ns);
+    pairs(pn, (a, b) => add("prefix pair", pk(a, b)));
+    nt.forEach(a => num.forEach(b => add("name + number", a + " + " + b)));
+    num.forEach(a => at.forEach(b => add("number + street word", a + " + " + b)));
+    pairs(num, (a, b) => add("number pair", pk(a, b)));
+    pn.forEach(a => pa.forEach(b => add("name + address prefix", a + " + " + b)));
+    ph.forEach(t => add("sound", t));
+    pairs(ph, (a, b) => add("sound pair", pk(a, b)));
+    ph.forEach(a => num.forEach(b => add("sound + number", a + " + " + b)));
+    return K;
+  }
+  return { init, normName, normAddr, phonetic, features, score, keys };
+})();
+
+ER.init({"weights": [3.0507, 1.5347, 4.011, 1.9451, 5.5448, 6.0624, 4.5379, -2.4223], "bias": -20.6129, "name_stop": ["a", "and", "c", "center", "centre", "cie", "co", "com", "company", "corp", "corporation", "d", "dba", "de", "des", "du", "ei", "enterprij", "enterprijej", "et", "eurl", "france", "group", "in", "inc", "incorporated", "india", "kampanee", "kampani", "l", "la", "le", "les", "limitad", "limited", "llc", "llp", "lp", "ltd", "m", "mr", "mrs", "ms", "net", "of", "org", "plc", "pllc", "praaivet", "praivet", "private", "pvt", "r", "s", "sa", "sarl", "sarvis", "sarvisej", "sarvises", "sas", "sasu", "sci", "service", "services", "shri", "snc", "sri", "the", "us", "usa", "www"], "addr_stop": ["a", "and", "at", "behind", "bis", "box", "c", "d", "door", "flat", "h", "hno", "house", "n", "na", "near", "no", "none", "nr", "null", "number", "o", "of", "office", "opp", "plot", "pmb", "po", "s", "shop", "ter", "the", "unit", "w"], "states": ["aisne", "ak", "al", "alabama", "alaska", "an", "andaman and nicobar islands", "andhra pradesh", "ap", "ar", "arizona", "arkansas", "arunachal pradesh", "as", "assam", "auvergne rhone alpes", "az", "bihar", "bouches du rhone", "bourgogne franche comte", "br", "bretagne", "ca", "california", "centre val de loire", "cg", "ch", "chandigarh", "charente", "charente maritime", "chhattisgarh", "co", "colorado", "connecticut", "correze", "corse", "creuse", "ct", "dadra and nagar haveli", "daman and diu", "dc", "dd", "de", "delaware", "delhi", "deux sevres", "district of columbia", "dl", "dn", "dordogne", "fl", "florida", "ga", "georgia", "gironde", "gj", "goa", "grand est", "gujarat", "haryana", "haute vienne", "hauts de france", "hawaii", "hi", "himachal pradesh", "hp", "hr", "ia", "id", "idaho", "il", "ile de france", "illinois", "in", "indiana", "iowa", "jammu and kashmir", "jammu kashmir", "jh", "jharkhand", "jk", "ka", "kansas", "karnataka", "kentucky", "kerala", "keralam", "kl", "ks", "ky", "la", "ladakh", "lakshadweep", "landes", "ld", "loire atlantique", "lot et garonne", "louisiana", "ma", "madhya pradesh", "maharashtra", "maine", "maine et loire", "manipur", "maryland", "massachusetts", "mayenne", "md", "me", "meghalaya", "mh", "mi", "michigan", "minnesota", "mississippi", "missouri", "mizoram", "ml", "mn", "mo", "montana", "mp", "ms", "mt", "mz", "nagaland", "nc", "nd", "ne", "nebraska", "nevada", "new delhi", "new hampshire", "new jersey", "new mexico", "new york", "nh", "nj", "nl", "nm", "nord", "normandie", "north carolina", "north dakota", "nouvelle aquitaine", "nv", "ny", "occitanie", "od", "odisha", "oh", "ohio", "oise", "ok", "oklahoma", "or", "oregon", "orissa", "pa", "paris", "pas de calais", "pays de la loire", "pb", "pennsylvania", "pondicherry", "pr", "provence alpes cote d azur", "puducherry", "puerto rico", "punjab", "py", "pyrenees atlantiques", "rajasthan", "rhode island", "rhone", "ri", "rj", "sarthe", "sc", "sd", "sikkim", "sk", "somme", "south carolina", "south dakota", "tamil nadu", "telangana", "tennessee", "texas", "tg", "tn", "tr", "tripura", "ts", "tx", "uk", "up", "ut", "utah", "uttar pradesh", "uttarakhand", "uttaranchal", "va", "vendee", "vermont", "vienne", "virginia", "vt", "wa", "washington", "wb", "west bengal", "west virginia", "wi", "wisconsin", "wv", "wy", "wyoming"], "canon": {"street": "st", "str": "st", "st": "st", "road": "rd", "rd": "rd", "avenue": "ave", "av": "ave", "ave": "ave", "avn": "ave", "drive": "dr", "dr": "dr", "lane": "ln", "ln": "ln", "boulevard": "blvd", "blvd": "blvd", "bd": "blvd", "bld": "blvd", "boul": "blvd", "court": "ct", "ct": "ct", "circle": "cir", "cir": "cir", "place": "pl", "pl": "pl", "parkway": "pkwy", "pkwy": "pkwy", "highway": "hwy", "hwy": "hwy", "terrace": "ter", "ter": "ter", "square": "sq", "sq": "sq", "trail": "trl", "trl": "trl", "rue": "rue", "r": "rue", "allee": "all", "all": "all", "route": "rte", "rte": "rte", "chemin": "ch", "ch": "ch", "impasse": "imp", "imp": "imp", "floor": "fl", "flr": "fl", "fl": "fl", "apartment": "apt", "apt": "apt", "suite": "ste", "ste": "ste", "north": "n", "n": "n", "south": "s", "s": "s", "east": "e", "e": "e", "west": "w", "w": "w", "nagar": "ngr", "ngr": "ngr", "opposite": "opp", "opp": "opp", "near": "nr", "nr": "nr"}});
+const LABELS=["Name spelling","Name words","Name, no spaces","Name sound","Address words","Street and area","House / plot numbers","House number differs"];
+const PRESETS=[
+ {t:"Spelling and suffix",r:["Sri Balaji Traders Pvt Ltd","12 Anna Salai Rd, Chennai, Tamil Nadu","SREE BALAJI TRADERS PRIVATE LIMITED","No.12, ANNA SALAI ROAD, TN"]},
+ {t:"Hindi script",r:["Consultancy Services Pvt Ltd","12 MG Road, Pune, Maharashtra","कंसल्टेंसी सर्विसेज प्राइवेट लिमिटेड","No.12, M.G. ROAD, PUNE, MH"]},
+ {t:"Website as name",r:["Bluebird Logistics LLC","4410 Cedar Ridge Drive, Austin, TX","bluebirdlogistics.com","#4410 CEDAR RIDGE DR, AUSTIN, TEXAS"]},
+ {t:"Decoy at same address",r:["Summit Roofing LLC","1200 Maple Avenue, Dayton, OH","Pioneer Bakery","1200 MAPLE AVE, DAYTON, OHIO"]},
+ {t:"Same name, other city",r:["Ganesh Textiles Pvt Ltd","45 Station Road, Surat, Gujarat","GANESH TEXTILES","212 Nehru Nagar, Lucknow, UP"]},
+ {t:"France (unseen in training)",r:["Élan Café SARL","3 Rue de la Paix, Lille, Hauts-de-France","ELAN CAFE","N° 3 R. DE LA PAIX, LILLE"]},
+ {t:"Missing address",r:["Riverbend Fitness LLC","77 Spring Street, Albany, NY","Riverbend Fitnes",""]},
+ {t:"Typo in house number",r:["Harbor Dental Studio","1610 Canal Drive, Raleigh, NC","Harbor Dental Studio","161 Canal Dr, Raleigh, North Carolina"]}
+];
+const $=id=>document.getElementById(id);
+const ids=["n1","a1","n2","a2"];
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function marked(text,other){const o=new Set(other.split(" "));return text?text.split(" ").map(w=>o.has(w)?`<mark>${esc(w)}</mark>`:esc(w)).join(" "):'<span class="muted">(empty)</span>';}
+function render(){
+  const v=ids.map(i=>$(i).value);
+  const r=ER.features(...v), p=ER.score(r.f);
+  const cls=p>=.8?"yes":p>=.4?"maybe":"no";
+  $("stamp").className="stamp "+cls;$("stamp").textContent=cls==="yes"?"Match":cls==="maybe"?"Possible":"No match";
+  $("prob").textContent=(p*100).toFixed(p>.995||p<.005?1:0)+"%";$("fill").style.width=(p*100)+"%";
+  $("clean").innerHTML=`<span class="lab">S1 name</span>${marked(r.n1,r.n2)}<span class="lab">S2 name</span>${marked(r.n2,r.n1)}<span class="lab">Name sound codes</span>${marked(r.p1,r.p2)} <span class="muted">vs</span> ${marked(r.p2,r.p1)}<span class="lab">S1 address</span>${marked(r.a1,r.a2)}<span class="lab">S2 address</span>${marked(r.a2,r.a1)}`;
+  const k1=ER.keys(r.n1,r.a1),k2=ER.keys(r.n2,r.a2),shared=[...k1.keys()].filter(k=>k2.has(k)).map(k=>k1.get(k));
+  $("keys").innerHTML=shared.length?`<div class="muted" style="font-family:var(--body)">${shared.length} shared key${shared.length>1?"s":""}</div>`+shared.map(k=>`<div class="key"><span class="t">${k.type}</span><span>${esc(k.v)}</span></div>`).join(""):'<div class="muted" style="font-family:var(--body)">No shared keys. In the real pipeline this pair would never be compared.</div>';
+  const W=ER_W;
+  $("ev").innerHTML=r.f.map((x,i)=>{const c=W[i]*x,w=Math.min(Math.abs(c)/6.1*100,100);return `<div class="evrow"><span>${LABELS[i]}</span><div class="bar"><i class="${c<0?"neg":""}" style="width:${w}%"></i></div><span class="val">${c>=0?"+":"−"}${Math.abs(c).toFixed(1)}</span></div>`}).join("");
+  const top=r.f.map((x,i)=>[W[i]*x,i]).sort((a,b)=>b[0]-a[0]);
+  $("summary").textContent=cls==="yes"?`Strongest evidence: ${LABELS[top[0][1]].toLowerCase()} and ${LABELS[top[1][1]].toLowerCase()}.`:cls==="maybe"?`Some signals agree (${LABELS[top[0][1]].toLowerCase()}), others don't. The full pipeline would weigh this against competing candidates.`:`Not enough agreement. Weakest signals: ${LABELS[top[top.length-2][1]].toLowerCase()}.`;
+}
+const ER_W=[3.0507, 1.5347, 4.011, 1.9451, 5.5448, 6.0624, 4.5379, -2.4223];
+PRESETS.forEach((pr,i)=>{const b=document.createElement("button");b.className="chip";b.type="button";b.textContent=pr.t;b.setAttribute("aria-pressed",i===0);b.onclick=()=>{ids.forEach((id,j)=>$(id).value=pr.r[j]);document.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed",c===b));render();};$("presets").appendChild(b);});
+ids.forEach((id,j)=>{$(id).value=PRESETS[0].r[j];$(id).addEventListener("input",()=>{document.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed","false"));render();});});
+render();
+// funnel (log scale 10^6 .. 10^14)
+const F=[["Every possible pair","17,272,955,000,000",1732544*9969589,false],["After blocking","50,381,255",50381255,false],["After learned pruning","7,723,118",7723118,true],["Final matches","5,373,695",5373695,true]];
+const lo=6,hi=14;
+$("funnel").innerHTML=F.map(([l,n,v,a])=>`<div class="frow"><div class="lab">${l}<b>${n}</b></div><div class="fbar ${a?"acc":""}" style="width:${((Math.log10(v)-lo)/(hi-lo)*100).toFixed(1)}%"></div></div>`).join("")+`<div class="frow"><span></span><div class="axis"><span>10⁶</span><span>10⁸</span><span>10¹⁰</span><span>10¹²</span><span>10¹⁴</span></div></div>`;
+// dot plot 0.90..1.00
+(function(){const s=$("dots"),x0=40,x1=720,sx=v=>x0+(v-.9)/.1*(x1-x0);const pts=[["v4 two-stage",.903],["v5 threshold 0.95",.922],["v1 first model",.931],["v1 ∩ v4 at 0.80",.934],["Final: v1 ∩ v4",.935],["Top team",.991]];
+let g=`<line x1="${x0}" y1="200" x2="${x1}" y2="200" stroke="var(--rule)" stroke-width="1.5"/>`;
+for(let t=0;t<=10;t+=2){const v=.9+t/100,x=sx(v);g+=`<line x1="${x}" y1="196" x2="${x}" y2="204" stroke="var(--muted)"/><text x="${x}" y="224" text-anchor="middle">${v.toFixed(2)}</text>`;}
+const rows=[40,65,90,115,140,165];pts.forEach(([l,v],i)=>{const x=sx(v),y=rows[i],fin=l.startsWith("Final"),top=l==="Top team";
+g+=`<line x1="${x}" y1="${y}" x2="${x}" y2="200" stroke="var(--rule)" stroke-dasharray="2 3"/><circle cx="${x}" cy="${y}" r="${fin?7:5}" fill="${fin?"var(--stamp)":top?"var(--muted)":"var(--ink)"}"/><text class="lbl" x="${top?x-12:x+12}" y="${y+4}" text-anchor="${top?"end":"start"}">${l} · ${v.toFixed(3)}</text>`;});
+g+=`<text x="${x0}" y="244">Public leaderboard, macro F0.5</text>`;s.innerHTML=g;})();
+</script>
+</body></html>

@@ -1,0 +1,6 @@
+numpy>=1.26
+pandas>=2.2
+pyarrow>=18.0
+rapidfuzz>=3.9
+lightgbm>=4.3
+indic-transliteration>=2.3
